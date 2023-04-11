@@ -1,13 +1,19 @@
 """This is a programme to convert uppercase to lowercase"""
 def To_Lower_Case():
-    user_name = input("To continue, Please enter your name : ")
-    user_name = user_name.strip()
+    name = user_name()
+    print("Hello " +name+ " , Welcome to Lowercase Converter\n")
+    task = user_task()
     #we use .strip() to remove unnecessary spaces
-    print("Hello " +user_name+ " , Welcome to Lowercase Converter")
-    user_input = input("Enter your task  : ")
-    out_put = user_input.lower()
-    #we use .lower() to convert uppercase to lowercase
-    print("Problem has been solved and the solution is : ")
+    out_put = task.lower()
+    #we use .lower() to convert upper case to lowercase
+    print("\nProblem has been solved and the solution is : \n")
     print(out_put)
+    
+def user_name():
+    name = input("What is your name? ")
+    return (name)
+def user_task():
+    task = input("Enter your task  : \n")
+    return (task)
 
 To_Lower_Case() 

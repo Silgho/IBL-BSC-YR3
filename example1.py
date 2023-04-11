@@ -1,3 +1,4 @@
+#This is a simple multiplication calculator :
 Z = float(input("Enter first number Z : "))
 R = float(input("Enter second number R : "))
 A = Z * R
