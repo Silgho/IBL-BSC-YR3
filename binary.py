@@ -1,62 +1,56 @@
 import requests
 
-API_TOKEN = 'YOUR_API_TOKEN'
-API_URL = 'https://api.binary.com'
+apiToken = 'YOUR_API_TOKEN'
+apiUrl = 'https://api.binary.com'
 
-# Utility function to get last digit of a contract id
-def get_last_digit(contract_id):
-    return int(str(contract_id)[-1])
+def getLastDigit(contractId):
+    return int(str(contractId)[-1])
 
-# Function to get list of available contracts that have an even last digit
-def get_even_contracts():
-    contracts_url = f"{API_URL}/contracts_for"
-    headers = {'Content-Type': 'application/json', 'x-api-token': API_TOKEN}
-    response = requests.get(contracts_url, headers=headers).json()
-    even_contracts = [contract for contract in response['contracts'] if get_last_digit(contract['contract_id']) % 2 == 0]
-    return even_contracts
+def getEvenContracts():
+    contractsUrl = f"{apiUrl}/contracts_for"
+    headers = {'Content-Type': 'application/json', 'x-api-token': apiToken}
+    response = requests.get(contractsUrl, headers=headers).json()
+    evenContracts = [contract for contract in response['contracts'] if getLastDigit(contract['contract_id']) % 2 == 0]
+    return evenContracts
 
-# Function to calculate the next stake amount based on the previous loss
 def calculate_next_stake(previous_loss, martingale_factor):
     return previous_loss * martingale_factor
 
-# Function to place a trade on an even last digit contract with a 300% profit target
-def place_trade(contract_id, stake, profit_target):
-    buy_url = f"{API_URL}/buy"
-    headers = {'Content-Type': 'application/json', 'x-api-token': API_TOKEN}
+def place_trade(contractId, stake, profitTarget):
+    buyUrl = f"{API_URL}/buy"
+    headers = {'Content-Type': 'application/json', 'x-api-token': apiToken}
     data = {
         'price': stake,
-        'amount': profit_target,
-        'contract_id': contract_id,
+        'amount': profitTarget,
+        'contract_id': contractId,
         'basis': 'stake',
         'duration': 5,
         'duration_unit': 't',
         'currency': 'USD'
     }
-    response = requests.post(buy_url, headers=headers, json=data).json()
+    response = requests.post(buyUrl, headers=headers, json=data).json()
     return response
 
-# Define the martingale factor and initial stake amount
-MARTINGALE_FACTOR = 2
-INITIAL_STAKE = 1
+martingalEFactor = 2
+initialStake = 1
 
-# Main trading loop
 while True:
-    even_contracts = get_even_contracts()
-    if not even_contracts:
+    evenContracts = getEvenContracts()
+    if not evenContracts:
         print("No even last digit contracts available.")
         break
-    contract_id = even_contracts[0]['contract_id']
-    stake = INITIAL_STAKE
+    contractId = evenContracts[0]['contract_id']
+    stake = initialStake
     while True:
-        profit_target = stake * 3
-        trade_result = place_trade(contract_id, stake, profit_target)
-        if trade_result['error']:
-            print(f"Error: {trade_result['error']['message']}")
+        profitTarget = stake * 3
+        tradeResult = place_trade(contractId, stake, profitTarget)
+        if tradeResult['error']:
+            print(f"Error: {tradeResult['error']['message']}")
             break
-        elif trade_result['buy']['payout'] == 0:
+        elif tradeResult['buy']['payout'] == 0:
             loss = stake
-            stake = calculate_next_stake(loss, MARTINGALE_FACTOR)
+            stake = calculate_next_stake(loss, martingalEFactor)
             print(f"Trade lost. Next stake amount: {stake}")
         else:
-            print(f"Trade won. Profit: {trade_result['buy']['payout']}")
+            print(f"Trade won. Profit: {tradeResult['buy']['payout']}")
             break

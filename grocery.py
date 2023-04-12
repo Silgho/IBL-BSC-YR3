@@ -1,9 +1,7 @@
 from collections import defaultdict
 
-# Initialize an empty dictionary to store item counts
 shoppingList = defaultdict(int)
-
-# Prompt the user for input
+name = input("Input your name to continue, please : \n")
 print("Write down your shopping list below, one item per line:")
 while True:
     try:
@@ -14,8 +12,7 @@ while True:
     except EOFError:
         break
 
-# Print the grocery list
-print("Here is your grocery list:")
+print("Here is your grocery list",name," : \n")
 for shopping in sorted(shoppingList.keys()):
     count = shoppingList[shopping]
     print(f"{count} {shopping.upper()}")

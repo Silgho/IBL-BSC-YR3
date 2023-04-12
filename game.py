@@ -5,27 +5,27 @@ while True:
     try:
         level = int(level_str)
         if level <= 0:
-            print("Invalid input. Please enter a positive integer.")
+            print("Sorry! Invalid input. Please enter a positive integer.")
             continue
         else:
             break
     except ValueError:
-        print("Invalid input. Please enter a positive integer.")
+        print("Sorry! Invalid input. Please enter a positive integer.")
 
-number = random.randint(1, level)
+num = random.randint(1, level)
 
 while True:
-    guess_str = input("Guess a number between 1 and {}: ".format(level))
+    guessStr = input("Guess a number between 1 and {}: ".format(level))
     try:
-        guess = int(guess_str)
+        guess = int(guessStr)
         if guess <= 0:
             print("Invalid input. Please enter a positive integer.")
-        elif guess < number:
+        elif guess < num:
             print("Too small!")
-        elif guess > number:
+        elif guess > num:
             print("Too large!")
         else:
             print("Just right!")
             break
     except ValueError:
-        print("Invalid input. Please enter a positive integer.")
+        print("Sorry! Invalid input. Please enter a positive integer.")
