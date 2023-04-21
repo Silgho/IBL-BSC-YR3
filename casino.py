@@ -40,7 +40,7 @@ def loadGame():
         
 
 def main():
-    
+        
     print(",,,,,,,,,,,,,,,,,,,,,,,,,,💖️,,,,,,,,,,,,,,,,,,,,,,,,,,\n")
     print(",,,,,,,,,,,,,,,,,,,,,,,,,💖️💖️,,,,,,,,,,,,,,,,,,,,,,,,,\n")
     print("\t\tHi there! 👋️, \n\twelcome to Silgho Casino ltd.\n")
@@ -49,4 +49,4 @@ def main():
     print("Here you can become a multimillionaire by guessing new levels ")
     loadGame()
     
-main()
+main() 
